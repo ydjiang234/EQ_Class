@@ -1,7 +1,8 @@
 #include <iostream>
 #include <vector>
 #include "GM.h"
-#include "FileLoader.h"
+#include "FileLoadSaver.h"
+#include "EigenArrayConvertor.h"
 
 using Eigen::ArrayXd;
 using Eigen::ArrayXXd;
@@ -9,18 +10,19 @@ using std::vector;
 
 int main()
 {
-    /*
-    ArrayXd accel;
-    accel = ArrayXd(3,1);
-    accel<<1,2,3;
-    double dt = 0.05;
-    GM *gm1 = new GM(accel, dt, 9.81, "90");
-    std::cout<<gm1->accel<<std::endl;
-    delete gm1;
-    */
-    char path[100] = "D:/Google Drive/Python_Scripts/Test/ABAQUS/1_FE.txt";
-    FileLoader *FL = new FileLoader();
+    FileLoadSaver *FLS = new FileLoadSaver();
+    EigenArrayConvertor *Con = new EigenArrayConvertor();
 
-    std::cout<<FL->FileToLongArray(path)[50][1]-100<<std::endl;
+
+    string path = "D:/Google Drive/Frames/GroundM/1-Chi-ChiTaiwan-04.dat";
+    ArrayXXd accel = Con->OneDimArray(FLS->FileToDoubleArray(path));
+    double dt = 0.001;
+    double unit = 9.81;
+    string label = "Test GM1";
+    ArrayXd Ts = ArrayXd::LinSpaced(400, 0.01, 4.0);
+    GM *gm1 = new GM(accel, dt, unit, label);
+    gm1->Spectrum(Ts);
+    string outpath = "C:/Users/yjiang/Desktop/tmp.txt";
+    gm1->saveTxt(outpath);
     return 0;
 }
