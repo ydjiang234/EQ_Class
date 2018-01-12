@@ -3,6 +3,8 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include "FileLoadSaver.h"
+#include "EigenArrayConvertor.h"
 
 using Eigen::ArrayXd;
 using Eigen::ArrayXXd;
@@ -23,7 +25,6 @@ GM::GM(ArrayXd accel, double dt, double unit, std::string label)
     this->times = this->dt * ArrayXd::LinSpaced(this->dataNum, 0, this->dataNum);
     this->Scale();
 }
-
 GM::~GM()
 {
     std::cout<<this->label;
