@@ -15,12 +15,12 @@ int main()
     EigenArrayConvertor *Con = new EigenArrayConvertor();
 
 
-    string path = "D:/Google Drive/Frames/GroundM/1-Chi-ChiTaiwan-04.dat";
+    string path = "/Users/JYD/Google Drive/Frames/GroundM/1-Chi-ChiTaiwan-04.dat";
     ArrayXXd accel = Con->OneDimArray(FLS->FileToDoubleArray(path));
     double dt = 0.001;
     double unit = 9.81;
     string label = "Test GM1";
-    ArrayXd Ts = ArrayXd::LinSpaced(40, 0.01, 4.0);
+    ArrayXd Ts = ArrayXd::LinSpaced(400, 0.01, 4.0);
     GM *gm1 = new GM(accel, dt, unit, label);
 
     /*
