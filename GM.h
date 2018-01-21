@@ -39,10 +39,11 @@ class GM
         void reScale(double scaleFactor);
         void scalePGA(double target);
         void saveTxt(std::string path);
+        void Scale();
 private:
         vector<ArrayXXd> Newmark(double dt, ArrayXd accelG, ArrayXd Ts, double dampingRatio=0.05, double beta=0.25, double gamma=0.5);
         void update();
-        void Scale();
+        
 
 };
 

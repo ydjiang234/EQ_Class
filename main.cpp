@@ -14,26 +14,35 @@ int main()
     FileLoadSaver *FLS = new FileLoadSaver();
     EigenArrayConvertor *Con = new EigenArrayConvertor();
 
-
-    string path = "/Users/JYD/Google Drive/Frames/GroundM/1-Chi-ChiTaiwan-04.dat";
-    ArrayXXd accel = Con->OneDimArray(FLS->FileToDoubleArray(path));
-    double dt = 0.001;
     double unit = 9.81;
-    string label = "Test GM1";
-    ArrayXd Ts = ArrayXd::LinSpaced(400, 0.01, 4.0);
-    GM *gm1 = new GM(accel, dt, unit, label);
+    ArrayXd Ts = ArrayXd::LinSpaced(20, 0.01, 4.0);
+    
+    std::string GM_ID_Path = "./Original/GM_ID.txt";
+    std::string GM_dt_Path = "./Original/GM_dt.txt";
+    std::string GM_scaleFactor_Path = "./Original/Scale_factor.txt";
 
-    /*
-    gm1->Spectrum(Ts);
-    string outpath = "C:/Users/yjiang/Desktop/tmp.txt";
-    gm1->saveTxt(outpath);
-    */
+    //Load the GM_id
+    vector<vector<std::string>> GM_ID = FLS->FileToStringArray(GM_ID_Path);
+    //Load GM_dt
+    vector<vector<double>> GM_dt = FLS->FileToDoubleArray(GM_dt_Path);
+    //Load scale factor
+    vector<vector<double>> scaleFactors = FLS->FileToDoubleArray(GM_scaleFactor_Path);
+    
+       
     GMSet *gmset = new GMSet();
-    gmset->appendGM(*gm1);
-    gmset->append(accel, 0.05, unit, "Test GM2");
-    gmset->Spectrum(Ts);
+    for (int i=0; i<GM_ID.size();i++)
+    {
+        ArrayXd accel = Con->OneDimArray(FLS->FileToDoubleArray("./Original/" + GM_ID[i][0]));
+        gmset->append(accel, GM_dt[i][0], unit, GM_ID[i][0]);
+    }
+
+
+    //gmset->Spectrum(Ts);
+    //gmset->savetxt("Set");
     //std::cout<<gmset->GMs[0].label<<std::endl;
     //std::cout<<gmset->GMs[1].label<<std::endl;
-    //std::cout<<gmset->GMNum<<std::endl;
+    //std::cout<<gmset->Sa<<std::endl;
+    gmset->loadtxt("Set");
+    std::cout<<gmset->Sa<<std::endl;
     return 0;
 }
