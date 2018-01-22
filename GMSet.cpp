@@ -76,6 +76,7 @@ void GMSet::savetxt(std::string path)
     FLS->DoubleArrayToFile(Con->FromTwoDimArray(outSa), path + "_Sa.txt", ' ');
     FLS->DoubleArrayToFile(Con->FromTwoDimArray(outSv), path + "_Sv.txt", ' ');
     FLS->DoubleArrayToFile(Con->FromTwoDimArray(outSd), path + "_Sd.txt", ' ');
+    std::cout<<"OK"<<std::endl;
 }
 
 void GMSet::loadtxt(std::string path)
@@ -85,7 +86,6 @@ void GMSet::loadtxt(std::string path)
     ArrayXXd inSa = Con->TwoDimArray(FLS->FileToDoubleArray(path + "_Sa.txt"));
     ArrayXXd inSv = Con->TwoDimArray(FLS->FileToDoubleArray(path + "_Sv.txt"));
     ArrayXXd inSd = Con->TwoDimArray(FLS->FileToDoubleArray(path + "_Sd.txt"));
-    std::cout<<"ok"<<std::endl;
     this->Ts = inSa.col(0);
     for (int i=0; i<this->GMNum; i++)
     {
@@ -106,6 +106,7 @@ void GMSet::scale()
         this->GMs[i].reScale(this->scaleFactors[i]);
     }
     this->update();
+
 }
 void GMSet::reScale(vector<double> input)
 {

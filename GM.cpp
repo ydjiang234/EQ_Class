@@ -27,8 +27,8 @@ GM::GM(ArrayXd accel, double dt, double unit, std::string label)
 }
 GM::~GM()
 {
-    std::cout<<this->label;
-    std::cout<<" is deleted"<<std::endl;
+    //std::cout<<this->label;
+    //std::cout<<" is deleted"<<std::endl;
 }
 
 void GM::reScale(double scaleFactor)
