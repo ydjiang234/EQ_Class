@@ -34,15 +34,21 @@ class GM
         ArrayXd accelScaled;
         GM(ArrayXd accel, double dt, double unit=9.81, std::string label="A single ground motion");
         ~GM();
+        void SpectrumFull(ArrayXd Ts, double dampingRatio=0.05, double beta=0.25, double gamma=0.5);
         void Spectrum(ArrayXd Ts, double dampingRatio=0.05, double beta=0.25, double gamma=0.5);
         vector<ArrayXXd> Response(double T, double dampingRatio=0.05, double beta=0.25, double gamma=0.5);
         void reScale(double scaleFactor);
         void scalePGA(double target);
-        void saveTxt(std::string path);
+        void savetxtRespone(std::string path);
+        void savetxtAccel(std::string path);
         void Scale();
+
 private:
-        vector<ArrayXXd> Newmark(double dt, ArrayXd accelG, ArrayXd Ts, double dampingRatio=0.05, double beta=0.25, double gamma=0.5);
+        vector<ArrayXXd> NewmarkFull(double dt, ArrayXd accelG, ArrayXd Ts, double dampingRatio=0.05, double beta=0.25, double gamma=0.5);
+        vector<ArrayXd> Newmark(double dt, ArrayXd accelG, ArrayXd Ts, double dampingRatio=0.05, double beta=0.25, double gamma=0.5);
         void update();
+        ArrayXd absmax(ArrayXd a, ArrayXd b);
+
         
 
 };
